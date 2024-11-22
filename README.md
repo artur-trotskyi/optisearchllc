@@ -10,7 +10,7 @@ Switch to the docker-compose-lepp folder in project folder and run containers in
 
     docker compose up -d
 
-Create 'optisearchllc' postgres database
+Create 'optisearchllc' postgres database for project and 'optisearchllc_test' postgres database for tests
 
 Launch the bash in web container
 

@@ -25,7 +25,8 @@ class OrderService extends BaseService
     {
         $cacheTag = config('cache.tags.orders');
         $filtersQueryString = http_build_query($strictFilters);
-        $cacheKey = "q={$q}&itemsPerPage={$itemsPerPage}&page={$page}&{$filtersQueryString}&sortBy={$sortBy}&orderBy={$orderBy}";
+        $userId = auth()->id();
+        $cacheKey = "user:{$userId}:q={$q}&itemsPerPage={$itemsPerPage}&page={$page}&{$filtersQueryString}&sortBy={$sortBy}&orderBy={$orderBy}";
         $orders = Cache::tags($cacheTag)->remember($cacheKey, config('cache.ttl'), function () use ($q, $itemsPerPage, $page, $strictFilters, $sortBy, $orderBy) {
             return $this->repo->getFilteredWithPaginate($q, $itemsPerPage, $page, $strictFilters, $sortBy, $orderBy);
         });

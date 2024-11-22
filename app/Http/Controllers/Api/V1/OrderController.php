@@ -24,8 +24,7 @@ class OrderController extends Controller implements HasMiddleware
      */
     public function __construct(
         private readonly OrderService $orderService,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the middleware that should be assigned to the controller.
