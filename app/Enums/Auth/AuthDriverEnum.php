@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Auth;
 
 use App\Http\Controllers\Auth\JWTAuthController;
 use App\Http\Controllers\Auth\SanctumAuthController;

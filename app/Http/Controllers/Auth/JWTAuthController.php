@@ -4,8 +4,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Dto\UserTokenDto;
-use App\Enums\ExceptionMessagesEnum;
+use App\Dto\User\UserTokenDto;
+use App\Enums\Exception\ExceptionMessagesEnum;
 use App\Enums\ResourceMessagesEnum;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
@@ -41,6 +41,8 @@ class JWTAuthController extends AuthBaseController implements HasMiddleware
 
     /**
      * Register a new user.
+     *
+     * @unauthenticated
      */
     public function register(AuthRegisterRequest $request): AuthResource
     {
@@ -60,6 +62,8 @@ class JWTAuthController extends AuthBaseController implements HasMiddleware
 
     /**
      * Log a user and get a token via given credentials.
+     *
+     * @unauthenticated
      *
      * @throws AuthenticationException
      * @throws Exception

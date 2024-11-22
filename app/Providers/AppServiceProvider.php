@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
-use App\Enums\AuthDriverEnum;
-use App\Enums\TokenAbilityEnum;
+use App\Enums\Auth\AuthDriverEnum;
+use App\Enums\Auth\TokenAbilityEnum;
+use App\Models\Order;
+use App\Policies\OrderPolicy;
+use Dedoc\Scramble\Scramble;
+use Dedoc\Scramble\Support\Generator\OpenApi;
+use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
@@ -29,9 +36,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
+
         if (config('auth.auth_driver') === AuthDriverEnum::SANCTUM->message()) {
+            Auth::shouldUse('sanctum');
             $this->overrideSanctumConfigurationToSupportRefreshToken();
         }
+
+        Gate::policy(Order::class, OrderPolicy::class);
+
+        Scramble::afterOpenApiGenerated(function (OpenApi $openApi) {
+            $openApi->secure(
+                SecurityScheme::http('bearer')
+            );
+        });
     }
 
     /**

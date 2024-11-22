@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Enums\ExceptionMessagesEnum;
+use App\Enums\Exception\ExceptionMessagesEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Collection;

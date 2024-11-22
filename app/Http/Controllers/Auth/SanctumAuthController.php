@@ -6,10 +6,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Dto\UserTokenDto;
-use App\Enums\ExceptionMessagesEnum;
+use App\Dto\User\UserTokenDto;
+use App\Enums\Auth\TokenAbilityEnum;
+use App\Enums\Exception\ExceptionMessagesEnum;
 use App\Enums\ResourceMessagesEnum;
-use App\Enums\TokenAbilityEnum;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Resources\Auth\AuthResource;
@@ -26,18 +26,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SanctumAuthController extends AuthBaseController
 {
-    private AuthService $authService;
-
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(
-        AuthService $authService
-    ) {
-        $this->authService = $authService;
-    }
+        private readonly AuthService $authService,
+    ) {}
 
     /**
      * Get the middleware that should be assigned to the controller.
@@ -53,6 +49,8 @@ class SanctumAuthController extends AuthBaseController
 
     /**
      * Register a new user.
+     *
+     * @unauthenticated
      */
     public function register(AuthRegisterRequest $request): AuthResource
     {
@@ -76,6 +74,8 @@ class SanctumAuthController extends AuthBaseController
 
     /**
      * Log a user and get a token via given credentials.
+     *
+     * @unauthenticated
      *
      * @throws AuthenticationException
      * @throws ValidationException

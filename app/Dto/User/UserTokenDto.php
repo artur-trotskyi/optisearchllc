@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\User;
 
 use App\Models\User;
 use App\Traits\MakeableTrait;

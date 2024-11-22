@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\AuthDriverEnum;
+use App\Enums\Auth\AuthDriverEnum;
 
 return [
 

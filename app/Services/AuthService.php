@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Enums\AuthDriverEnum;
-use App\Enums\ExceptionMessagesEnum;
-use App\Enums\TokenAbilityEnum;
+use App\Enums\Auth\AuthDriverEnum;
+use App\Enums\Auth\TokenAbilityEnum;
+use App\Enums\Exception\ExceptionMessagesEnum;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Cookie\CookieJar;

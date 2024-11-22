@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Auth;
 
 use App\Enums\ResourceMessagesEnum;
 use Illuminate\Http\JsonResponse;

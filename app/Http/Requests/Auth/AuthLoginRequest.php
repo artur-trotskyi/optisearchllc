@@ -23,7 +23,13 @@ class AuthLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
+            /**
+             * @example admin@email.test
+             */
             'email' => ['required', 'string', 'max:255', 'email', 'exists:users,email'],
+            /**
+             * @example password
+             */
             'password' => ['required', 'string', 'min:6', 'max:255'],
         ];
     }
