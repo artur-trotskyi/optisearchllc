@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use app\Enums\Order\OrderStatusEnum;
+use App\Enums\Order\OrderStatusEnum;
 use App\Observers\OrderObserver;
 use App\Traits\HandlesUuidValidationTrait;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;

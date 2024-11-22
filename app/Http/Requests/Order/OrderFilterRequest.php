@@ -27,7 +27,13 @@ class OrderFilterRequest extends FormRequest
     {
         return [
             'q' => ['sometimes', 'nullable', 'string'],
+            /**
+             * @example 20
+             */
             'itemsPerPage' => ['required', 'integer', 'between:'.OrderFilterEnum::itemsPerPage()['min'].','.OrderFilterEnum::itemsPerPage()['max']],
+            /**
+             * @example 1
+             */
             'page' => ['required', 'integer', 'min:1'],
             'product_name' => ['sometimes', 'nullable', 'string'],
             'status' => ['sometimes', 'nullable', 'string'],

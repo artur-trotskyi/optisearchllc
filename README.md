@@ -51,3 +51,5 @@ Configure your hosts file on main machine
 Check API-DOC `http://optisearchllc.local/docs/api`
 
 Check Telescope `http://optisearchllc.local/telescope/requests`
+
+Run Horizon `php artisan horizon and Horizon` and check `http://optisearchllc.local/horizon/dashboard` [https://laravel.su/docs/11.x/horizon]

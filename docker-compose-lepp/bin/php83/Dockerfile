@@ -57,8 +57,7 @@ RUN apt-get update && \
     docker-php-ext-install pgsql pdo_pgsql
 
 # Install other PHP 8 extensions
-RUN docker-php-ext-install pdo_mysql pdo_sqlite bcmath mysqli curl zip intl mbstring gettext calendar exif sockets
-
+RUN docker-php-ext-install pdo_mysql pdo_sqlite bcmath mysqli curl zip intl mbstring gettext calendar exif sockets pcntl
 
 # Install FreeType and GD library for image processing
 RUN apt-get -y update && \

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Order;
 
 use App\Dto\Order\OrderStoreDto;
-use app\Enums\Order\OrderStatusEnum;
+use App\Enums\Order\OrderStatusEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
