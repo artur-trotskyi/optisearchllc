@@ -52,4 +52,6 @@ Check API-DOC `http://optisearchllc.local/docs/api`
 
 Check Telescope `http://optisearchllc.local/telescope/requests`
 
-Run Horizon `php artisan horizon and Horizon` and check `http://optisearchllc.local/horizon/dashboard` [https://laravel.su/docs/11.x/horizon]
+Run Horizon `php artisan horizon` and check `http://optisearchllc.local/horizon/dashboard` [https://laravel.su/docs/11.x/horizon]
+
+Run tests in the container `php artisan test`
