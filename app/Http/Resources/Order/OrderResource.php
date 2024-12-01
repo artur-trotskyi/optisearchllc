@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Order;
 
+use App\Http\Resources\BaseResource;
 use Illuminate\Http\Request;
 
 class OrderResource extends BaseResource

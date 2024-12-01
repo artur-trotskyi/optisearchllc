@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Order;
+namespace App\Http\Resources;
 
 use App\Enums\ResourceMessagesEnum;
 use Illuminate\Http\JsonResponse;

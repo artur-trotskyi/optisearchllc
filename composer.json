@@ -18,6 +18,8 @@
         "laravel/tinker": "^2.10",
         "php-amqplib/php-amqplib": "^3.7.2",
         "predis/predis": "^2.3",
+        "symfony/css-selector": "^7.2",
+        "symfony/dom-crawler": "^7.2",
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1",
         "tymon/jwt-auth": "^2.1"

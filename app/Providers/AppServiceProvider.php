@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Enums\Auth\AuthDriverEnum;
 use App\Enums\Auth\TokenAbilityEnum;
 use App\Models\Order;
+use App\Models\PriceSubscription;
 use App\Policies\OrderPolicy;
+use App\Policies\PriceSubscriptionPolicy;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Gate::policy(Order::class, OrderPolicy::class);
+        Gate::policy(PriceSubscription::class, PriceSubscriptionPolicy::class);
 
         Scramble::afterOpenApiGenerated(function (OpenApi $openApi) {
             $openApi->secure(

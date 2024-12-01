@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Order;
+use App\Models\PriceSubscription;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -31,10 +32,12 @@ class UsersTableSeeder extends Seeder
             Order::factory()->count(250)->create([
                 'user_id' => $user->id,
             ]);
-
+            PriceSubscription::factory()->count(2)->create([
+                'user_id' => $user->id,
+            ]);
         }
 
-        // Create additional users and orders
+        // Create additional users, orders, price Subscriptions
         User::factory()
             ->count(10)
             ->has(Order::factory()->count(20))
