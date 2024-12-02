@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Order;
+namespace App\Http\Resources;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class BaseResourceCollection extends ResourceCollection
+class BaseResource extends JsonResource
 {
     protected bool $success = true;
 
@@ -14,8 +14,6 @@ class BaseResourceCollection extends ResourceCollection
 
     /**
      * Set success and message properties.
-     *
-     * @return $this
      */
     public function withStatusMessage(bool $success, string $message): self
     {
@@ -33,7 +31,7 @@ class BaseResourceCollection extends ResourceCollection
         $response->setData([
             'success' => $this->success,
             'message' => $this->message,
-            'data' => $response->getData(),
+            'data' => $response->getData()->data,
         ]);
     }
 }

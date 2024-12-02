@@ -55,3 +55,7 @@ Check Telescope `http://optisearchllc.local/telescope/requests`
 Run Horizon `php artisan horizon` and check `http://optisearchllc.local/horizon/dashboard` [https://laravel.su/docs/11.x/horizon]
 
 Run tests in the container `php artisan test`
+
+Run queue `php artisan queue:work`
+
+Run schedule `php artisan schedule:work`

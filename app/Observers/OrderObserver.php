@@ -40,14 +40,10 @@ class OrderObserver
     /**
      * Handle the Order "restored" event.
      */
-    public function restored(Order $order): void
-    {
-    }
+    public function restored(Order $order): void {}
 
     /**
      * Handle the Order "force deleted" event.
      */
-    public function forceDeleted(Order $order): void
-    {
-    }
+    public function forceDeleted(Order $order): void {}
 }
