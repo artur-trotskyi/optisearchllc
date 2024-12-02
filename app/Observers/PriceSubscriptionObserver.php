@@ -7,6 +7,7 @@ use App\Mail\PriceSubscriptionConfirmationMail;
 use App\Models\PriceSubscription;
 use Exception;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class PriceSubscriptionObserver
@@ -20,8 +21,9 @@ class PriceSubscriptionObserver
     {
         try {
             Mail::to($priceSubscription->getAttribute('email'))
-                ->send(new PriceSubscriptionConfirmationMail($priceSubscription));
-        } catch (Exception) {
+                ->queue(new PriceSubscriptionConfirmationMail($priceSubscription));
+        } catch (Exception $e) {
+            Log::error('Failed to queue confirmation email: '.$e->getMessage());
         }
     }
 
@@ -37,8 +39,9 @@ class PriceSubscriptionObserver
         try {
             $oldPrice = $priceSubscription->getOriginal('price');
             Mail::to($priceSubscription->getAttribute('email'))
-                ->send(new PriceChangedNotificationMail($priceSubscription, $oldPrice));
-        } catch (Exception) {
+                ->queue(new PriceChangedNotificationMail($priceSubscription, $oldPrice));
+        } catch (Exception $e) {
+            Log::error('Failed to queue price change notification email: '.$e->getMessage());
         }
     }
 
