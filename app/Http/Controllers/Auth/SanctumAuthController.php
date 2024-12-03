@@ -73,6 +73,20 @@ class SanctumAuthController extends AuthBaseController
     }
 
     /**
+     * Register a new user and require email verification.
+     *
+     * @unauthenticated
+     */
+    public function registerWithEmailVerification(AuthRegisterRequest $request): AuthResource
+    {
+        $registerRequestData = $request->validated();
+        User::create($registerRequestData);
+
+        return AuthResource::make([], ResourceMessagesEnum::VerificationEmailSent->message())
+            ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    /**
      * Log a user and get a token via given credentials.
      *
      * @unauthenticated

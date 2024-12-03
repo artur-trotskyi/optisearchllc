@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -71,6 +72,11 @@ class ApiExceptionHandler
             case $exception instanceof ThrottleRequestsException:
                 $this->message = ExceptionMessagesEnum::TooManyRequests->message();
                 $this->code = Response::HTTP_TOO_MANY_REQUESTS;
+                $this->errors[] = $exception->getMessage();
+                break;
+            case $exception instanceof HttpException:
+                $this->message = $exception->getMessage();
+                $this->code = $exception->getStatusCode() ?? Response::HTTP_FORBIDDEN;
                 $this->errors[] = $exception->getMessage();
                 break;
             default:

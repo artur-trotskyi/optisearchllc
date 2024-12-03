@@ -18,4 +18,10 @@ enum ResourceMessagesEnum: string
     case LoginSuccessful = 'Login successful.';
     case YouAreLoggedOut = 'You are logged out.';
     case AlreadyLoggedOut = 'Already logged out.';
+    case VerificationEmailSent = 'A verification email has been sent to your email address. Please check your inbox and complete the verification process.';
+    case UserNotFound = 'User not found.';
+    case InvalidHash = 'Invalid hash.';
+    case EmailAlreadyVerified = 'Email already verified.';
+    case EmailVerifiedSuccessfully = 'Email verified successfully.';
+    case PasswordResetSuccessful = 'Your password has been successfully reset.';
 }
