@@ -89,12 +89,12 @@ class PasswordResetTest extends TestCase
             'password_confirmation' => 'new-password',
         ]);
 
-        $response->assertStatus(403)
+        $response->assertStatus(401)
             ->assertJson([
                 'success' => false,
-                'message' => 'Your email address is not verified.',
+                'message' => 'Authentication is required to access this resource.',
                 'data' => [
-                    'errors' => ['Your email address is not verified.'],
+                    'errors' => ['Authentication is required to access this resource.'],
                 ],
             ]);
     }

@@ -7,7 +7,7 @@ Route::middleware(['throttle:api', 'api'])->prefix('v1')->group(function () {
         require base_path('routes/api/v1/auth.php');
     });
 
-    Route::middleware(['verified'])->group(function () {
+    Route::middleware([])->group(function () {
         require base_path('routes/api/v1/api.php');
-    });
+    })->middleware(['verified']);
 });

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\SanctumAuthController;
 use App\Services\AuthService;
 use Illuminate\Support\Facades\Route;
@@ -15,12 +14,12 @@ Route::prefix('auth')->as('auth.')->group(function () use ($authController): voi
     Route::post('register', [$authController, 'register'])->name('register');
     Route::post('login', [$authController, 'login'])->name('login');
 
-    Route::middleware(['verified'])->group(function () use ($authController): void {
+    Route::prefix('')->group(function () use ($authController): void {
         Route::post('logout', [$authController, 'logout'])->name('logout');
         Route::post('refresh-token', [$authController, 'refresh'])->name('refresh');
-        Route::post('password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
+        Route::post('password/reset', [$authController, 'resetPassword'])->name('password.reset');
         Route::post('me', [$authController, 'me'])->name('me');
-    });
+    })->middleware(['verified']);
 });
 
 Route::prefix('auth')->as('auth.')->group(function (): void {

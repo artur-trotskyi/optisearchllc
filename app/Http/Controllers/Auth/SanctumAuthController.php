@@ -12,6 +12,7 @@ use App\Enums\Exception\ExceptionMessagesEnum;
 use App\Enums\ResourceMessagesEnum;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
+use App\Http\Requests\Auth\AuthResetPasswordRequest;
 use App\Http\Resources\Auth\AuthResource;
 use App\Models\User;
 use App\Services\AuthService;
@@ -41,7 +42,7 @@ class SanctumAuthController extends AuthBaseController
     public static function middleware(): array
     {
         return [
-            new Middleware('auth:sanctum', only: ['logout', 'refresh', 'me']),
+            new Middleware('auth:sanctum', only: ['logout', 'refresh', 'me', 'resetPassword']),
             new Middleware('ability:'.TokenAbilityEnum::ISSUE_ACCESS_TOKEN->message(), only: ['refresh']),
             new Middleware('ability:'.TokenAbilityEnum::ACCESS_API->message(), only: ['me']),
         ];
@@ -201,5 +202,41 @@ class SanctumAuthController extends AuthBaseController
 
         return AuthResource::make($userTokenDto, ResourceMessagesEnum::LoginSuccessful->message())
             ->setCookie($cookie);
+    }
+
+    /**
+     * Reset the password for the authenticated user.
+     *
+     * @throws ValidationException
+     * @throws Exception
+     */
+    public function resetPassword(AuthResetPasswordRequest $request): AuthResource
+    {
+        $user = Auth::guard('sanctum')->user();
+        if (! $user) {
+            throw new AuthenticationException(ExceptionMessagesEnum::AuthenticationRequired->message());
+        }
+
+        if (! Hash::check($request->input('current_password'), $user->getAttribute('password'))) {
+            throw ValidationException::withMessages([
+                'current_password' => 'The provided current password is incorrect.',
+            ]);
+        }
+
+        $user->forceFill([
+            'password' => bcrypt($request->input('password')),
+        ])->save();
+
+        try {
+            // Revoke all tokens
+            $user->tokens()->delete();
+            // Revoke the current token
+            // $user->currentAccessToken()->delete();
+        } catch (Exception $e) {
+            throw new Exception(ExceptionMessagesEnum::UnableToRevokeTokens->message());
+        }
+
+        return AuthResource::make([], ResourceMessagesEnum::PasswordResetSuccessful->message())
+            ->setStatusCode(Response::HTTP_OK);
     }
 }

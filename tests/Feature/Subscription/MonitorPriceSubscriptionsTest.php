@@ -19,8 +19,8 @@ class MonitorPriceSubscriptionsTest extends TestCase
         $subscriptions = PriceSubscription::factory()
             ->count(2)
             ->sequence(
-                ['url' => 'http://example.com', 'price' => 100],
-                ['url' => 'http://example.com', 'price' => 200],
+                ['url' => 'http://example.com', 'price' => 100, 'is_confirmed' => true],
+                ['url' => 'http://example.com', 'price' => 200, 'is_confirmed' => true],
             )
             ->create();
 

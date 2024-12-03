@@ -9,12 +9,15 @@ use App\Enums\Exception\ExceptionMessagesEnum;
 use App\Enums\ResourceMessagesEnum;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
+use App\Http\Requests\Auth\AuthResetPasswordRequest;
 use App\Http\Resources\Auth\AuthResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
@@ -148,5 +151,29 @@ class JWTAuthController extends AuthBaseController implements HasMiddleware
         } catch (JWTException $e) {
             throw new Exception(ExceptionMessagesEnum::CouldNotRefreshToken->message());
         }
+    }
+
+    /**
+     * Reset the password for the authenticated user.
+     *
+     * @throws ValidationException
+     */
+    public function resetPassword(AuthResetPasswordRequest $request): AuthResource
+    {
+        $user = $request->user();
+        if (! Hash::check($request->input('current_password'), $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => 'The provided current password is incorrect.',
+            ]);
+        }
+
+        $user->forceFill([
+            'password' => bcrypt($request->input('password')),
+        ])->save();
+
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return AuthResource::make([], ResourceMessagesEnum::PasswordResetSuccessful->message())
+            ->setStatusCode(Response::HTTP_OK);
     }
 }
