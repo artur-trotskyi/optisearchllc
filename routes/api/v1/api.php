@@ -4,11 +4,13 @@ use App\Enums\Auth\AuthDriverEnum;
 use App\Http\Controllers\Api\V1\LoggerController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\PriceSubscriptionController;
+use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Support\Facades\Route;
 
 $authMiddleware = (config('auth.auth_driver') === AuthDriverEnum::SANCTUM->message()) ? 'auth:sanctum' : 'auth:api';
-Route::middleware([$authMiddleware])->group(function () {
+Route::middleware([$authMiddleware, 'verified'])->group(function () {
     Route::apiResource('orders', OrderController::class);
+    Route::apiResource('products', ProductController::class);
 
     Route::prefix('loggers')->as('loggers.')->group(function () {
         Route::post('/log', [LoggerController::class, 'log'])->name('default');
